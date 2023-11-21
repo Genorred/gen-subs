@@ -24,6 +24,13 @@ https://github.com/TejasQ/gen-subs/assets/9947422/bc8df523-b62a-4123-a62d-2df178
 - 🎧 **Multi-modal** - Supports both audio and video files and generates subtitles for each.
 - 📊 **Multi-model** - Choose from a variety of machine learning models ranging from 40MB to >2GB in size. The larger the model, the more accurate the subtitles, but smaller models are also quite capable.
 
+## Prerequisites
+
+### On Windows
+You need to install the latest version of Visual Studio including the "Desktop development with C++" workload. This is a requirement from node-gyp which is needed for running gen-subs. 
+
+It's available at https://visualstudio.microsoft.com/downloads
+
 ## Usage
 
 You can generate subtitles for any video using the following command:
@@ -44,27 +51,37 @@ npx gen-subs models
 
 This will have you choose a language and then show you a collection of models, their sizes, and intended use cases (like podcasting, content, etc.). You can then choose a model and download it. Once downloaded, you can use it to generate subtitles for your video. You only download models once, and can remove them any time by running `npx gen-subs models purge`. You can also list all your downloaded models by running `npx gen-subs models ls`.
 
+### Other Languages
+
+You can install a wide variety of models that can "hear" different languages. To generate subs for any language, follow these steps:
+
+1. First, install a model with `npx gen-subs models`. You will be asked to choose a language here.
+2. Then, run `npx gen-subs for ./your/video.mp4` to generate subtitles for your video, You will be asked which model to use.
+3. Enjoy!
+
 ## API
 
 This project has a few options that you can use to customize your subtitles. Let's enumerate them here. Each command comes after `npx gen-subs` and is followed by a list of options.
 
-| Command        | Description                                         |
-| -------------- | --------------------------------------------------- |
-| `for`          | Generate subtitles for a given video or audio file. |
-| `models`       | Manage models                                       |
-| `models purge` | Delete all downloaded models.                       |
-| `models ls`    | Show a list of all models downloaded to the system. |
+| Command                              | Description                                                          |
+| ------------------------------------ | -------------------------------------------------------------------- |
+| `for <mediaFile>`                    | Generate subtitles for a given video or audio file.                  |
+| `models`                             | Manage models                                                        |
+| `models purge`                       | Delete all downloaded models.                                        |
+| `models ls`                          | Show a list of all models downloaded to the system.                  |
+| `burn-in <videoFile> <subtitleFile>` | Burns subtitles into the video and gives you a new video.            |
+| `embed <videoFile> <subtitleFile>`   | Adds subtitles to the video's metadata but does not alter the video. |
 
 ### `gen-subs for [media]`
 
-| Option                    | Description                                                                                                | Default                       |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `-m, --model [modelName]` | The name of the machine learning model you'd like to use to generate subtitles.                            | `vosk-model-small-en-us-0.15` |
-| `-b, --burn-in`           | Whether to layer subtitles atop the video (burn them in).                                                  | None                          |
-| `-e, --embed`             | Whether to embed subtitles in the video's metadata.                                                        | None                          |
-| `-o, --out-dir [path]`    | Where to output the subtitle and final video files.                                                        | `process.cwd()`               |
-| `-f, --format [format]`   | Choose between `srt` or `ass` formats. `ass` lets you do more cool stuff like focus words. (Default `srt`) | `srt`                         |
-| `-h --highlight [color]`  | (`ass` subtitles only) Highlight the active word with a color.                                             | `#048BA8`                     |
+| Option                    | Description                                                                                                                                                         | Default                       |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `-m, --model [modelName]` | The name of the machine learning model you'd like to use to generate subtitles.                                                                                     | `vosk-model-small-en-us-0.15` |
+| `-b, --burn-in`           | Whether to layer subtitles atop the video (burn them in).                                                                                                           | None                          |
+| `-e, --embed`             | Whether to embed subtitles in the video's metadata.                                                                                                                 | None                          |
+| `-o, --out-dir [path]`    | Where to output the subtitle and final video files.                                                                                                                 | `process.cwd()`               |
+| `-f, --format [format]`   | Choose between `srt` or `ass` formats. `ass` lets you do more cool stuff like focus words. (Default `srt`)                                                          | `srt`                         |
+| `-h --highlight [color]`  | (`ass` subtitles only) Highlight the active word with a color. ⚠️ Use double quotes (`""`) when entering hex codes into your terminal because `#` starts a comment! | `"#048BA8"`                   |
 
 ## Contributing
 
